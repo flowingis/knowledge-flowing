@@ -1,0 +1,13 @@
+{
+    "extends": "standard",
+    "globals": {
+        "fetch":false,
+        "self":false,
+        "caches":false,
+        "HTMLElement":false,
+        "describe":false,
+        "test":false,
+        "expect":false,
+        "FIREBASE_APP_KEY": false
+    }
+}
