@@ -27,8 +27,9 @@
     "deploy": "now --public --name knowledge-flowing ./dist"
   },
   "devDependencies": {
-    "@babel/core": "7.0.1",
+    "@babel/core": "^7.0.1",
     "@babel/preset-env": "7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "8.0.2",
     "babel-plugin-transform-custom-element-classes": "0.1.0",
@@ -52,6 +53,7 @@
     "node-sass": "4.9.2",
     "now": "11.4.2",
     "prettier": "^1.14.2",
+    "regenerator-runtime": "^0.12.1",
     "sass-loader": "7.0.2",
     "style-loader": "0.21.0",
     "url-loader": "1.0.1",
