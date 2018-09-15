@@ -1,1 +1,1 @@
-console.log('Start')
+window.mdc.autoInit()

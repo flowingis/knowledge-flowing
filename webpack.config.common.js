@@ -4,7 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const dist = path.join(__dirname, 'dist')
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index.js'),
+  entry: [
+    path.join(__dirname, 'src', 'index.js'),
+    path.join(__dirname, 'style', 'index.scss')
+  ],
   output: {
     path: dist,
     filename: '[name].bundle.js'
@@ -34,10 +37,6 @@ module.exports = {
       {
         test: /\.svg$/,
         use: ['url-loader?mimetype=image/svg+xml']
-      },
-      {
-        test: /\.component\.css$/,
-        use: ['css-loader']
       },
       {
         rules: [
