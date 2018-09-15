@@ -8,7 +8,16 @@
 </head>
 
 <body>
-    <h1>Knowledge Flowing</h1>
+    <button data-authorize disabled>Authorize</button>
+    <button data-signout disabled>Sign Out</button>
+    <button data-list-file>List</button>
+    <button data-create-file>Create</button>
+    <button data-update-file>Update</button>
+    <button data-read-file>Read</button>
+
+    <script type="text/javascript" src="main.bundle.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="handleClientLoad()">
+    </script>
 </body>
 
 </html>

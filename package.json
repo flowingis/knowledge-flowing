@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/ideatosrl/knowledge-flowing#readme",
   "dependencies": {
-    "@webcomponents/custom-elements": "1.1.0"
+    "@babel/polyfill": "^7.0.0",
+    "@webcomponents/custom-elements": "1.1.0",
+    "lodash.get": "^4.4.2"
   },
   "scripts": {
     "build": "webpack --config ./webpack.config.prod.js",
@@ -28,7 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.0.1",
-    "@babel/preset-env": "7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "8.0.2",
     "babel-plugin-transform-custom-element-classes": "0.1.0",
@@ -36,6 +38,7 @@
     "babel-preset-env": "1.6.1",
     "copy-webpack-plugin": "4.5.1",
     "css-loader": "0.28.11",
+    "dotenv-webpack": "^1.5.7",
     "eslint": "4.19.1",
     "eslint-config-standard": "11.0.0",
     "eslint-plugin-import": "2.11.0",
