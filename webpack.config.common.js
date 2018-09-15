@@ -1,10 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const dist = path.join(__dirname, 'dist')
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index.js'),
+  entry: [
+    path.join(__dirname, 'src', 'index.js'),
+    path.join(__dirname, 'src', 'vendor.js')
+  ],
   output: {
     path: dist,
     filename: '[name].bundle.js'
@@ -36,8 +39,11 @@ module.exports = {
         use: ['url-loader?mimetype=image/svg+xml']
       },
       {
-        test: /\.component\.css$/,
-        use: ['css-loader']
+        test: /mce\.min\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         rules: [
@@ -56,6 +62,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'mce.min.css'
     })
   ]
 }

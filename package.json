@@ -16,15 +16,15 @@
     "url": "https://github.com/ideatosrl/knowledge-flowing/issues"
   },
   "homepage": "https://github.com/ideatosrl/knowledge-flowing#readme",
-  "dependencies": {
-    "@webcomponents/custom-elements": "1.1.0"
-  },
   "scripts": {
     "build": "webpack --config ./webpack.config.prod.js",
     "start": "webpack-dev-server --config ./webpack.config.dev.js",
     "test": "jest",
     "predeploy": "npm run build",
     "deploy": "now --public --name knowledge-flowing ./dist"
+  },
+  "dependencies": {
+    "mce": "git@github.com:ideatosrl/mce.git#master"
   },
   "devDependencies": {
     "@babel/core": "7.0.1",
