@@ -9,4 +9,4 @@ Knowledge Flowing side project
 
 ## Live Demo
 
-[here](http://knowledge.extrategy.net/)
+[here](https://knowledge.extrategy.net/)
