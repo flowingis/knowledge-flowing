@@ -23,5 +23,6 @@ const init = () => {
 
 export default {
   init,
-  navigate: url => router.navigate(url)
+  navigate: url => router.navigate(url),
+  lastRouteResolved: () => router.lastRouteResolved()
 }

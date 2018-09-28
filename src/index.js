@@ -1,6 +1,6 @@
-import router from './router'
 import googleAuth from 'src/model/GoogleAuth'
+import app from './app'
 
-router.init()
+app.start()
 
 window.handleClientLoad = googleAuth.onClientLoad

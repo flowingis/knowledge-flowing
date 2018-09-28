@@ -14,6 +14,13 @@ export const updateProps = (root, context = root) => {
   })
 }
 
+export const updateText = (root, context = root) => {
+  Array.from(root.querySelectorAll('[data-text]')).forEach(element => {
+    const attribute = element.getAttribute('data-text')
+    element.innerText = get(context, attribute)
+  })
+}
+
 export const bindEvents = (root, context, ...eventNames) => {
   eventNames.forEach(eventName => {
     const attributeName = `data-bind-${eventName}`
