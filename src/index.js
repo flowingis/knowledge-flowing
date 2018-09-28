@@ -1,1 +1,3 @@
-window.mdc.autoInit()
+import initRoutes from './routes'
+
+initRoutes()
