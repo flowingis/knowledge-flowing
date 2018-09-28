@@ -1,6 +1,7 @@
 import template from './Login.html'
 import { htmlToElement, bindEvents, updateProps } from 'src/utils/dom'
 import googleAuth from 'src/model/GoogleAuth'
+import router from 'src/router'
 
 class LoginPage extends HTMLElement {
   connectedCallback () {
@@ -33,16 +34,21 @@ class LoginPage extends HTMLElement {
           logged: signedId
         }
         updateProps(this)
+        if (signedId) {
+          router.navigate('/home')
+        }
       })
     })
   }
 
   onLoginClick () {
-    googleAuth.signIn()
+    googleAuth
+      .signIn()
   }
 
   onLogoutClick () {
-    googleAuth.signOut()
+    googleAuth
+      .signOut()
   }
 }
 
