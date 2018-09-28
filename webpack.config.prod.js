@@ -1,6 +1,8 @@
 const commonConfiguration = require('./webpack.config.common')
 const webpack = require('webpack')
 
+console.log(process.env.PROVA)
+
 module.exports = {
   ...commonConfiguration,
   plugins: [
