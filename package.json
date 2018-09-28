@@ -27,7 +27,7 @@
     "start": "webpack-dev-server --config ./webpack.config.dev.js",
     "test": "jest",
     "predeploy": "npm run build",
-    "deploy": "now --public --name knowledge-flowing ./dist"
+    "deploy": "now --public --single --name knowledge-flowing ./dist"
   },
   "devDependencies": {
     "@babel/core": "7.0.1",
@@ -55,7 +55,7 @@
     "lint-staged": "7.0.4",
     "mini-css-extract-plugin": "0.4.0",
     "node-sass": "4.9.2",
-    "now": "11.4.2",
+    "now": "11.4.6",
     "prettier": "1.14.2",
     "regenerator-runtime": "0.12.1",
     "sass-loader": "7.0.2",
