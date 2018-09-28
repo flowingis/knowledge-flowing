@@ -9,6 +9,7 @@
         "describe":false,
         "test":false,
         "expect":false,
-        "gapi": false
+        "gapi": false,
+        "env": false
     }
 }
