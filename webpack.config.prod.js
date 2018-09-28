@@ -1,6 +1,6 @@
 const commonConfiguration = require('./webpack.config.common')
 
-console.log('TEST', env.GOGGLE_CLIENT_ID)
+console.log('TEST', process.env.GOGGLE_CLIENT_ID)
 
 module.exports = {
   ...commonConfiguration,
