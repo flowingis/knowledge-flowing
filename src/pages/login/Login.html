@@ -1,5 +1,8 @@
 <div>
-    <button class="ui primary button" data-bind-click="onLoginClick">
+    <button class="ui primary button" data-bind-click="onLoginClick" data-prop="disabled:loginDisabled">
         Login
+    </button>
+    <button class="ui primary button" data-bind-click="onLogoutClick" data-prop="disabled:logoutDisabled">
+        Logout
     </button>
 </div>

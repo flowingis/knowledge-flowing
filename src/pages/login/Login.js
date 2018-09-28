@@ -1,15 +1,48 @@
 import template from './Login.html'
-import { htmlToElement, bindEvents } from 'src/utils/dom'
+import { htmlToElement, bindEvents, updateProps } from 'src/utils/dom'
+import googleAuth from 'src/model/GoogleAuth'
 
 class LoginPage extends HTMLElement {
   connectedCallback () {
+    this.render()
+    this.initGoogleAuth()
+    this.state = {
+      logged: false
+    }
+  }
+
+  get loginDisabled () {
+    return this.state.logged
+  }
+
+  get logoutDisabled () {
+    return !this.state.logged
+  }
+
+  render () {
     const element = htmlToElement(template)
-    this.appendChild(element)
     bindEvents(element, this, 'click')
+    this.appendChild(element)
+  }
+
+  initGoogleAuth () {
+    googleAuth.setInitListener(() => {
+      googleAuth.addSignInListener(signedId => {
+        this.state = {
+          ...this.state,
+          logged: signedId
+        }
+        updateProps(this)
+      })
+    })
   }
 
   onLoginClick () {
-    console.log('Login')
+    googleAuth.signIn()
+  }
+
+  onLogoutClick () {
+    googleAuth.signOut()
   }
 }
 
