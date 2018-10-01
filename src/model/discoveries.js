@@ -1,21 +1,24 @@
 import pipeDriveClient from './pipeDriveClient'
 import googleDrive from './googleDrive'
-import get from 'lodash.get'
+import _get from 'lodash.get'
+
+const formatId = id => id.toString().padStart(5, '0')
 
 const factory = (pipeDriveClient) => {
-  const create = async id => {
-    const response = await pipeDriveClient.get(id)
-    const directoryTitle = `${id} - ${get(response, 'data.title')}`
-    const directory = await googleDrive.findDirectory(directoryTitle)
-    if (directory) {
-      return directory
-    }
+  const get = async pipeDriveId => {
+    const formattedId = formatId(pipeDriveId)
+    return googleDrive.findDirectory(formattedId, false)
+  }
 
+  const create = async pipeDriveId => {
+    const response = await pipeDriveClient.get(pipeDriveId)
+    const directoryTitle = `${formatId(pipeDriveId)} - ${_get(response, 'data.title')}`
     return googleDrive.createDirectory(directoryTitle)
   }
 
   return {
-    create
+    create,
+    get
   }
 }
 

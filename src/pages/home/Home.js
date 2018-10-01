@@ -22,10 +22,14 @@ class HomePage extends HTMLElement {
 
   async onSearchClick () {
     const id = extractIdFromPipeDriveUrl(this.inputValue)
+    let discovery = await discoveries.get(id)
+    if (!discovery) {
+      discovery = await discoveries.create(id)
+    }
+
     const link = this.querySelector('[data-drive-directory]')
-    const response = await discoveries.create(id)
-    link.innerText = response.name
-    link.href = response.webViewLink
+    link.innerText = discovery.name
+    link.href = discovery.webViewLink
   }
 
   onLogoutClick () {

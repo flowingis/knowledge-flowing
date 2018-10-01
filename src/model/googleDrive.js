@@ -122,9 +122,10 @@ const factory = () => {
     readContent
   } */
 
-  const findDirectory = async (name, parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY) => {
+  const findDirectory = async (name, equal = true, parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY) => {
+    const nameOperator = equal ? '=' : 'contains'
     return gapi.client.drive.files.list({
-      'q': `mimeType='application/vnd.google-apps.folder' and trashed = false and name = '${name}' and '${parent}' in parents`,
+      'q': `mimeType='application/vnd.google-apps.folder' and trashed = false and name ${nameOperator} '${name}' and '${parent}' in parents`,
       'pageSize': 1,
       'fields': 'files(id, name, webViewLink)'
     }).then(r => get(r, 'result.files.0'))
