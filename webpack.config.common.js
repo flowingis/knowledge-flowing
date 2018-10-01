@@ -13,11 +13,6 @@ module.exports = {
     path: dist,
     filename: '[name].bundle.js'
   },
-  resolve: {
-    alias: {
-      src: path.join(__dirname, 'src')
-    }
-  },
   module: {
     rules: [
       {

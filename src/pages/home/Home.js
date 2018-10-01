@@ -1,16 +1,8 @@
-/* eslint no-useless-escape: 0 */
-
 import template from './Home.html'
-import { htmlToElement, bindEvents } from 'src/utils/dom'
-import discoveries from 'src/model/discoveries'
-import googleAuth from 'src/model/googleAuth'
-
-const extractIdFromPipeDriveUrl = url => {
-  const regex = new RegExp(`https:\/\/${process.env.PIPEDRIVE_COMPANY_DOMAIN}\.pipedrive\.com\/deal\/([0-9]+)`)
-  const match = url.match(regex)
-  return match && match[1]
-}
-
+import { htmlToElement, bindEvents } from 'utils/dom'
+import discoveries from 'model/discoveries'
+import googleAuth from 'model/googleAuth'
+import { extractIdFromPipeDriveUrl } from 'model/pipeDriveClient'
 class HomePage extends HTMLElement {
   connectedCallback () {
     this.render()

@@ -1,4 +1,4 @@
-import googleAuth from 'src/model/googleAuth'
+import googleAuth from 'model/googleAuth'
 import app from './app'
 
 app.start()

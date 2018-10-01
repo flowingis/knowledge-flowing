@@ -1,5 +1,5 @@
 import router from './router'
-import googleAuth from 'src/model/googleAuth'
+import googleAuth from 'model/googleAuth'
 
 const start = () => {
   googleAuth.setInitListener(() => {
