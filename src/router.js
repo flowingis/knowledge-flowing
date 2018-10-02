@@ -29,11 +29,10 @@ export default () => {
       main.innerHTML =
         '<kf-pages-create-discovery></kf-pages-create-discovery>'
     })
-    .on('discovery/:id', async () => {
+    .on('discovery/:id', async ({ id }) => {
       await import('./pages/discoveryDetail/DiscoveryDetail')
       await window.customElements.whenDefined('kf-pages-discovery-detail')
-      main.innerHTML =
-        '<kf-pages-discovery-detail></kf-pages-discovery-detail>'
+      main.innerHTML = `<kf-pages-discovery-detail discovery-id="${id}"></kf-pages-discovery-detail>`
     })
     .resolve()
 

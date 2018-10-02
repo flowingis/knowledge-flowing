@@ -1,5 +1,5 @@
 import template from './DiscoveryDetail.html'
-import { htmlToElement, bindEvents } from 'utils/dom'
+import { htmlToElement, bindEvents, updateText } from 'utils/dom'
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -9,8 +9,10 @@ class DiscoveryDetailPage extends HTMLElement {
   render () {
     const element = htmlToElement(template)
     bindEvents(element, this, 'click', 'input')
+    updateText(element, this)
     this.appendChild(element)
     this.style.display = 'block'
+    console.log(this.discoveryId)
   }
 
   get discoveryId () {
