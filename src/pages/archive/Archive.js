@@ -11,7 +11,7 @@ class ArchivePage extends HTMLElement {
   }
 
   async list () {
-    this.tableBody.innerHTML = ''
+    const tableBody = htmlToElement('<tbody></tbody>')
 
     const list = await discoveries.list()
 
@@ -37,8 +37,10 @@ class ArchivePage extends HTMLElement {
       )
       .map(htmlToElement)
       .forEach(element => {
-        this.tableBody.appendChild(element)
+        tableBody.appendChild(element)
       })
+
+    this.tableBody.replaceWith(tableBody)
 
     appContext.getRouter().updatePageLinks()
   }
