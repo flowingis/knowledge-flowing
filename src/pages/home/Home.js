@@ -1,5 +1,3 @@
-import 'components/Menu/Menu'
-
 import template from './Home.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
 import discoveries from 'model/discoveries'

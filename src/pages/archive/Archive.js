@@ -5,6 +5,7 @@ import discoveries from 'model/discoveries'
 class ArchivePage extends HTMLElement {
   connectedCallback () {
     this.render()
+    discoveries.list().then(console.log)
   }
 
   render () {

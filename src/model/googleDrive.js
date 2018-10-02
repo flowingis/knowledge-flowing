@@ -1,5 +1,7 @@
 import get from 'lodash.get'
 
+export const DIRECTORY_MIME_TYPE = 'application/vnd.google-apps.folder'
+
 const factory = () => {
   /*
   const list = () => gapi.client.drive.files.list({
@@ -122,29 +124,54 @@ const factory = () => {
     readContent
   } */
 
-  const findDirectory = async (name, equal = true, parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY) => {
+  const findDirectory = async (
+    name,
+    equal = true,
+    parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
+  ) => {
     const nameOperator = equal ? '=' : 'contains'
-    return gapi.client.drive.files.list({
-      'q': `mimeType='application/vnd.google-apps.folder' and trashed = false and name ${nameOperator} '${name}' and '${parent}' in parents`,
-      'pageSize': 1,
-      'fields': 'files(id, name, webViewLink)'
-    }).then(r => get(r, 'result.files.0'))
+    return gapi.client.drive.files
+      .list({
+        q: `mimeType='${DIRECTORY_MIME_TYPE}' and trashed = false and name ${nameOperator} '${name}' and '${parent}' in parents`,
+        pageSize: 1,
+        fields: 'files(id, name, webViewLink)'
+      })
+      .then(r => get(r, 'result.files.0'))
   }
 
-  const createDirectory = async (name, parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY) => {
+  const list = async ({
+    mimeType = DIRECTORY_MIME_TYPE,
+    parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
+  } = {}) => {
+    return gapi.client.drive.files
+      .list({
+        q: `mimeType='${mimeType}' and trashed = false and '${parent}' in parents`,
+        pageSize: 1000,
+        fields: 'files(id, name, webViewLink)'
+      })
+      .then(r => get(r, 'result.files'))
+  }
+
+  const createDirectory = async (
+    name,
+    parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
+  ) => {
     const fileMetadata = {
       name,
       parents: [parent],
-      'mimeType': 'application/vnd.google-apps.folder'
+      mimeType: DIRECTORY_MIME_TYPE
     }
 
-    return gapi.client.drive.files.create({
-      resource: fileMetadata,
-      fields: 'id, name, webViewLink'
-    }).then(file => file.result)
+    return gapi.client.drive.files
+      .create({
+        resource: fileMetadata,
+        fields: 'id, name, webViewLink'
+      })
+      .then(file => file.result)
   }
 
   return {
+    list,
     findDirectory,
     createDirectory
   }
