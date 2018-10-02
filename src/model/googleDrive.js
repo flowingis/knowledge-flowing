@@ -146,6 +146,7 @@ const factory = () => {
     return gapi.client.drive.files
       .list({
         q: `mimeType='${mimeType}' and trashed = false and '${parent}' in parents`,
+        orderBy: 'name',
         pageSize: 1000,
         fields: 'files(id, name, webViewLink)'
       })

@@ -5,7 +5,29 @@ import discoveries from 'model/discoveries'
 class ArchivePage extends HTMLElement {
   connectedCallback () {
     this.render()
-    discoveries.list().then(console.log)
+    this.tableBody = this.querySelector('tbody')
+    this.list()
+  }
+
+  async list () {
+    this.tableBody.innerHTML = ''
+
+    const list = await discoveries.list()
+
+    list
+      .map(
+        discovery => `<tr>
+            <td>${discovery.id}</td>
+            <td>${discovery.title}</td>
+            <td><a target="_blank" href="${discovery.webViewLink}">${
+  discovery.webViewLink
+}</a></td>
+        </tr>`
+      )
+      .map(htmlToElement)
+      .forEach(element => {
+        this.tableBody.appendChild(element)
+      })
   }
 
   render () {

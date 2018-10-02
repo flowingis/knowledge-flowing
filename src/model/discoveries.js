@@ -25,7 +25,7 @@ const factory = pipeDriveClient => {
       const nameParts = driveElement.name.split(' - ')
       return {
         id: parseInt(nameParts[0]),
-        name: nameParts[1],
+        title: nameParts[1],
         webViewLink: driveElement.webViewLink
       }
     })
