@@ -1,25 +1,10 @@
-<div class="ui container">
-    <div class="ui fixed inverted menu">
-        <div class="ui container">
-            <a href="#" class="header item">
-                Knowledge Flowing
-            </a>
-            <a href="home" data-navigo class="item">Dashboard</a>
-            <a href="tools" data-navigo class="item">Tools</a>
-            <a href="archive" data-navigo class="item">Archive</a>
-            <div class="item right">
-                <div class="ui button" data-bind-click="onLogoutClick">Logout</div>
-            </div>
+<kf-components-menu>
+    <div>
+        <div class="ui action input">
+            <input type="text" placeholder="Insert Number or PipeDrive URL..." data-bind-input="onInputChange">
+            <button class="ui button" data-bind-click="onSearchClick">Search</button>
         </div>
+        <div class="ui divider"></div>
+        <a data-drive-directory href="" target="_blank"></a>
     </div>
-    <div class="ui main container">
-        <div class="ui container">
-            <div class="ui action input">
-                <input type="text" placeholder="Insert Number or PipeDrive URL..." data-bind-input="onInputChange">
-                <button class="ui button" data-bind-click="onSearchClick">Search</button>
-            </div>
-            <div class="ui divider"></div>
-            <a data-drive-directory href="" target="_blank"></a>
-        </div>
-    </div>
-</div>
+</kf-components-menu>

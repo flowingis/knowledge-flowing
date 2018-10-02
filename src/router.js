@@ -18,11 +18,17 @@ const init = () => {
       await window.customElements.whenDefined('kf-pages-home')
       main.innerHTML = '<kf-pages-home></kf-pages-home>'
     })
+    .on('archive', async () => {
+      await import('./pages/archive/Archive')
+      await window.customElements.whenDefined('kf-pages-archive')
+      main.innerHTML = '<kf-pages-archive></kf-pages-archive>'
+    })
     .resolve()
 }
 
 export default {
   init,
   navigate: url => router.navigate(url),
-  lastRouteResolved: () => router.lastRouteResolved()
+  lastRouteResolved: () => router.lastRouteResolved(),
+  updatePageLinks: () => router.updatePageLinks()
 }

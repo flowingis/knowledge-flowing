@@ -1,8 +1,10 @@
+import 'components/Menu/Menu'
+
 import template from './Home.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
 import discoveries from 'model/discoveries'
-import googleAuth from 'model/googleAuth'
 import { extractIdFromPipeDriveUrl } from 'model/pipeDriveClient'
+
 class HomePage extends HTMLElement {
   connectedCallback () {
     this.render()
@@ -30,11 +32,6 @@ class HomePage extends HTMLElement {
     const link = this.querySelector('[data-drive-directory]')
     link.innerText = discovery.name
     link.href = discovery.webViewLink
-  }
-
-  onLogoutClick () {
-    googleAuth
-      .signOut()
   }
 }
 

@@ -25,10 +25,11 @@ export const bindEvents = (root, context, ...eventNames) => {
   eventNames.forEach(eventName => {
     const attributeName = `data-bind-${eventName}`
     Array.from(root.querySelectorAll(`[${attributeName}]`)).forEach(element => {
-      const handler = context[element.getAttribute(attributeName)].bind(
-        context
-      )
-      element.addEventListener(eventName, handler)
+      const handler = context[element.getAttribute(attributeName)]
+      if (!handler) {
+        return
+      }
+      element.addEventListener(eventName, handler.bind(context))
     })
   })
 }
