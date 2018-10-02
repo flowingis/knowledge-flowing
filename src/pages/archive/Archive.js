@@ -1,6 +1,7 @@
 import template from './Archive.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
 import discoveries from 'model/discoveries'
+import appContext from 'appContext'
 
 class ArchivePage extends HTMLElement {
   connectedCallback () {
@@ -19,15 +20,27 @@ class ArchivePage extends HTMLElement {
         discovery => `<tr>
             <td>${discovery.id}</td>
             <td>${discovery.title}</td>
-            <td><a target="_blank" href="${discovery.webViewLink}">${
+            <td>
+              <a class="ui button primary" target="_blank" data-navigo href="discovery/${
+  discovery.id
+}">
+                Open
+              </a>
+              <a class="ui button" target="_blank" href="${
   discovery.webViewLink
-}</a></td>
+}">
+                <i class="google drive icon"></i>
+                Drive
+              </a>
+            </td>
         </tr>`
       )
       .map(htmlToElement)
       .forEach(element => {
         this.tableBody.appendChild(element)
       })
+
+    appContext.getRouter().updatePageLinks()
   }
 
   render () {

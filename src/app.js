@@ -4,15 +4,13 @@ import appContext from './appContext'
 
 const start = () => {
   const router = appContext.getRouter()
-  googleAuth.setInitListener(() => {
-    googleAuth.addSignInListener(signedId => {
-      const isLogin = !router.lastRouteResolved().url
-      if (signedId && isLogin) {
-        router.navigate('/home')
-      } else if (!signedId && !isLogin) {
-        router.navigate('')
-      }
-    })
+  googleAuth.addSignInListener(signedId => {
+    const isLogin = !router.lastRouteResolved().url
+    if (signedId && isLogin) {
+      router.navigate('/home')
+    } else if (!signedId && !isLogin) {
+      router.navigate('')
+    }
   })
 }
 

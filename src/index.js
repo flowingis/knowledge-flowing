@@ -3,9 +3,10 @@ import app from './app'
 import routerFactory from './router'
 import appContext from './appContext'
 
-const router = routerFactory()
-appContext.setRouter(router)
-
-app.start()
+googleAuth.setInitListener(() => {
+  const router = routerFactory()
+  appContext.setRouter(router)
+  app.start()
+})
 
 window.handleClientLoad = googleAuth.onClientLoad
