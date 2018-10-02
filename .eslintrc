@@ -10,6 +10,7 @@
         "test":false,
         "expect":false,
         "gapi": false,
-        "env": false
+        "env": false,
+        "swal": false
     }
 }

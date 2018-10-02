@@ -1,7 +1,7 @@
 import template from './Menu.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
 import googleAuth from 'model/googleAuth'
-import router from 'router'
+import appContext from 'appContext'
 
 class Menu extends HTMLElement {
   connectedCallback () {
@@ -13,12 +13,11 @@ class Menu extends HTMLElement {
     bindEvents(element, this, 'click')
     this.appendChild(element)
     this.style.display = 'block'
-    router.updatePageLinks()
+    appContext.getRouter().updatePageLinks()
   }
 
   onLogoutClick () {
-    googleAuth
-      .signOut()
+    googleAuth.signOut()
   }
 }
 

@@ -4,7 +4,7 @@ let router
 
 const main = document.querySelector('main')
 
-const init = () => {
+export default () => {
   router = new Navigo(null, true)
 
   router
@@ -18,17 +18,28 @@ const init = () => {
       await window.customElements.whenDefined('kf-pages-home')
       main.innerHTML = '<kf-pages-home></kf-pages-home>'
     })
-    .on('archive', async () => {
+    .on('discovery', async () => {
       await import('./pages/archive/Archive')
       await window.customElements.whenDefined('kf-pages-archive')
       main.innerHTML = '<kf-pages-archive></kf-pages-archive>'
     })
+    .on('discovery/create', async () => {
+      await import('./pages/createDiscovery/CreateDiscovery')
+      await window.customElements.whenDefined('kf-pages-create-discovery')
+      main.innerHTML =
+        '<kf-pages-create-discovery></kf-pages-create-discovery>'
+    })
+    .on('discovery/:id', async () => {
+      await import('./pages/discoveryDetail/DiscoveryDetail')
+      await window.customElements.whenDefined('kf-pages-discovery-detail')
+      main.innerHTML =
+        '<kf-pages-discovery-detail></kf-pages-discovery-detail>'
+    })
     .resolve()
-}
 
-export default {
-  init,
-  navigate: url => router.navigate(url),
-  lastRouteResolved: () => router.lastRouteResolved(),
-  updatePageLinks: () => router.updatePageLinks()
+  return {
+    navigate: url => router.navigate(url),
+    lastRouteResolved: () => router.lastRouteResolved(),
+    updatePageLinks: () => router.updatePageLinks()
+  }
 }
