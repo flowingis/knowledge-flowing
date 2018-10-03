@@ -1,5 +1,9 @@
-const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
-const SCOPES = 'https://www.googleapis.com/auth/drive'
+const DISCOVERY_DOCS = [
+  'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+  'https://sheets.googleapis.com/$discovery/rest?version=v4'
+]
+const SCOPES =
+  'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets.readonly'
 
 const factory = () => {
   let signInListeners = []
@@ -7,17 +11,19 @@ const factory = () => {
 
   const onClientLoad = () => {
     const initClient = () => {
-      return gapi.client.init({
-        apiKey: process.env.GOGGLE_API_KEY,
-        clientId: process.env.GOGGLE_CLIENT_ID,
-        discoveryDocs: DISCOVERY_DOCS,
-        scope: SCOPES
-      }).then(function () {
-        gapi.auth2.getAuthInstance().isSignedIn.listen(status => {
-          signInListeners.forEach(cb => cb(status))
+      return gapi.client
+        .init({
+          apiKey: process.env.GOGGLE_API_KEY,
+          clientId: process.env.GOGGLE_CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES
         })
-        onInitListener()
-      })
+        .then(function () {
+          gapi.auth2.getAuthInstance().isSignedIn.listen(status => {
+            signInListeners.forEach(cb => cb(status))
+          })
+          onInitListener()
+        })
     }
 
     gapi.load('client:auth2', initClient)

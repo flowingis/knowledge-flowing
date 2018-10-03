@@ -1,5 +1,6 @@
 import pipeDriveClient from './pipeDriveClient'
 import googleDrive from './googleDrive'
+import googleSpreadsheet from './googleSpreadSheet'
 import _get from 'lodash.get'
 
 const formatId = id => id.toString().padStart(5, '0')
@@ -31,9 +32,26 @@ const factory = pipeDriveClient => {
     })
   }
 
+  const listElements = async () => {
+    const data = await googleSpreadsheet.getData(
+      process.env.DISCOVERY_ELEMENTS_SPREADSHEET_ID,
+      process.env.DISCOVERY_ELEMENTS_SPREADSHEET_RANGE
+    )
+    const values = _get(data, 'values', [])
+    return values.map(row => {
+      const [name, length, notes] = row
+      return {
+        name,
+        length,
+        notes
+      }
+    })
+  }
+
   return {
     create,
     list,
+    listElements,
     get
   }
 }

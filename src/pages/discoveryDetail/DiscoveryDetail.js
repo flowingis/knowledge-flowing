@@ -1,5 +1,6 @@
 import template from './DiscoveryDetail.html'
 import { htmlToElement, bindEvents, updateText } from 'utils/dom'
+import discoveries from 'model/discoveries'
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -12,7 +13,7 @@ class DiscoveryDetailPage extends HTMLElement {
     updateText(element, this)
     this.appendChild(element)
     this.style.display = 'block'
-    console.log(this.discoveryId)
+    discoveries.listElements().then(console.log)
   }
 
   get discoveryId () {
