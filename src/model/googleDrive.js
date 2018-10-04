@@ -124,6 +124,58 @@ const factory = () => {
     readContent
   } */
 
+  const createFile = ({
+    name,
+    data,
+    mimeType = 'application/json',
+    parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
+  }) => {
+    const user = gapi.auth2.getAuthInstance().currentUser.get()
+    const accessToken = user.getAuthResponse(true).access_token
+
+    const headers = new window.Headers({
+      Authorization: `Bearer ${accessToken}`
+    })
+
+    const body = new window.FormData()
+
+    body.append(
+      'metadata',
+      new window.Blob(
+        [
+          JSON.stringify({
+            name,
+            parents: [parent]
+          })
+        ],
+        {
+          type: mimeType
+        }
+      )
+    )
+
+    body.append(
+      'data',
+      new window.Blob([JSON.stringify(data)], {
+        type: mimeType
+      })
+    )
+
+    const config = {
+      method: 'POST',
+      headers,
+      body
+    }
+
+    const URL =
+      'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart'
+
+    return window
+      .fetch(URL, config)
+      .then(r => r.json())
+      .then(r => r.id)
+  }
+
   const findDirectory = async (
     name,
     equal = true,
@@ -174,7 +226,8 @@ const factory = () => {
   return {
     list,
     findDirectory,
-    createDirectory
+    createDirectory,
+    createFile
   }
 }
 
