@@ -1,6 +1,7 @@
 import template from './DiscoveryDetail.html'
 import { htmlToElement, bindEvents, updateText } from 'utils/dom'
 import discoveries from 'model/discoveries'
+import googleDrive from 'model/googleDrive'
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -33,8 +34,13 @@ class DiscoveryDetailPage extends HTMLElement {
       })
   }
 
-  save () {
-    console.log('save')
+  async save () {
+    const id = await googleDrive.createFile({
+      name: 'test.doc',
+      data: '<html><body><h1>Prova</h1></body></html>',
+      mimeType: 'application/vnd.google-apps.document'
+    })
+    console.log('saved', id)
   }
 
   get discoveryId () {

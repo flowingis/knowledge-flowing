@@ -154,12 +154,7 @@ const factory = () => {
       )
     )
 
-    body.append(
-      'data',
-      new window.Blob([JSON.stringify(data)], {
-        type: mimeType
-      })
-    )
+    body.append('data', new window.Blob([data], { type: 'text/html' }))
 
     const config = {
       method: 'POST',
