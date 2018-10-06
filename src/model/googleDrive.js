@@ -1,4 +1,6 @@
 import get from 'lodash.get'
+import multipartRelatedBodyFactory from './multipartRelatedBodyFactory'
+import uuid from 'uuid'
 
 export const DIRECTORY_MIME_TYPE = 'application/vnd.google-apps.folder'
 
@@ -124,7 +126,7 @@ const factory = () => {
     readContent
   } */
 
-  const createFile = ({
+  const createFile = async ({
     name,
     data,
     mimeType = 'application/json',
@@ -133,37 +135,29 @@ const factory = () => {
     const user = gapi.auth2.getAuthInstance().currentUser.get()
     const accessToken = user.getAuthResponse(true).access_token
 
+    const boundary = uuid.v4()
+
     const headers = new window.Headers({
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': `multipart/related; boundary=${boundary}`
     })
 
-    const body = new window.FormData()
+    const body = multipartRelatedBodyFactory({
+      name,
+      boundary,
+      body: data,
+      parent,
+      mimeType
+    })
 
-    body.append(
-      'metadata',
-      new window.Blob(
-        [
-          JSON.stringify({
-            name,
-            parents: [parent]
-          })
-        ],
-        {
-          type: mimeType
-        }
-      )
-    )
-
-    body.append('data', new window.Blob([data], { type: 'text/html' }))
+    const URL =
+      'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart'
 
     const config = {
       method: 'POST',
       headers,
       body
     }
-
-    const URL =
-      'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart'
 
     return window
       .fetch(URL, config)

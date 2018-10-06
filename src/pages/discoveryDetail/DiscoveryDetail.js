@@ -36,7 +36,7 @@ class DiscoveryDetailPage extends HTMLElement {
 
   async save () {
     const id = await googleDrive.createFile({
-      name: 'test.doc',
+      name: 'Test Report',
       data: '<html><body><h1>Prova</h1></body></html>',
       mimeType: 'application/vnd.google-apps.document'
     })
