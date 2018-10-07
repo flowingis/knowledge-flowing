@@ -18,6 +18,12 @@ class DiscoveryDetailPage extends HTMLElement {
     this.style.display = 'block'
 
     this.renderList()
+    this.load()
+  }
+
+  async load () {
+    this.discovery = await discoveries.get(this.discoveryId)
+    updateText(this)
   }
 
   async renderList () {
@@ -35,12 +41,13 @@ class DiscoveryDetailPage extends HTMLElement {
   }
 
   async save () {
-    const id = await googleDrive.createFile({
-      name: 'Test Report',
-      data: '<html><body><h1>Prova</h1></body></html>',
+    await googleDrive.createFile({
+      name: this.printableDiscovery,
+      data: `<html></body>${this.innerHTML}</body></html>`,
+      parent: this.discovery.directoryId,
       mimeType: 'application/vnd.google-apps.document'
     })
-    console.log('saved', id)
+    swal('File Saved')
   }
 
   get discoveryId () {
@@ -49,6 +56,14 @@ class DiscoveryDetailPage extends HTMLElement {
 
   set discoveryId (value) {
     this.setAttribute('discovery-id', value)
+  }
+
+  get printableDiscovery () {
+    if (!this.discovery) {
+      return this.discoveryId
+    }
+
+    return `${this.discovery.id} - ${this.discovery.title}`
   }
 }
 

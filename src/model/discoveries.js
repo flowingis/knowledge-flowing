@@ -5,10 +5,25 @@ import _get from 'lodash.get'
 
 const formatId = id => id.toString().padStart(5, '0')
 
+const transformResult = driveElement => {
+  const nameParts = driveElement.name.split(' - ')
+  return {
+    directoryId: driveElement.id,
+    id: parseInt(nameParts[0]),
+    title: nameParts[1],
+    webViewLink: driveElement.webViewLink
+  }
+}
+
 const factory = pipeDriveClient => {
   const get = async pipeDriveId => {
     const formattedId = formatId(pipeDriveId)
-    return googleDrive.findDirectory(formattedId, false)
+    const directory = await googleDrive.findDirectory(formattedId, false)
+    if (!directory) {
+      return
+    }
+
+    return transformResult(directory)
   }
 
   const create = async pipeDriveId => {
@@ -22,14 +37,7 @@ const factory = pipeDriveClient => {
 
   const list = async () => {
     const response = await googleDrive.list()
-    return response.map(driveElement => {
-      const nameParts = driveElement.name.split(' - ')
-      return {
-        id: parseInt(nameParts[0]),
-        title: nameParts[1],
-        webViewLink: driveElement.webViewLink
-      }
-    })
+    return response.map(transformResult)
   }
 
   const listElements = async () => {
