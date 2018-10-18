@@ -22,7 +22,11 @@ const factory = () => {
           gapi.auth2.getAuthInstance().isSignedIn.listen(status => {
             signInListeners.forEach(cb => cb(status))
           })
-          onInitListener()
+          onInitListener(true)
+        })
+        .catch(e => {
+          console.error('Google not initialized')
+          onInitListener(false)
         })
     }
 

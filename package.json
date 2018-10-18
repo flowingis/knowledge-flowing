@@ -19,6 +19,7 @@
   "dependencies": {
     "@webcomponents/custom-elements": "1.1.0",
     "babel-polyfill": "6.26.0",
+    "cloudconvert": "^1.1.2",
     "lodash.get": "4.4.2",
     "navigo": "7.1.2",
     "uuid": "3.3.2"

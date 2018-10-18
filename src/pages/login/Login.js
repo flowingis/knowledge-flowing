@@ -1,6 +1,16 @@
 import template from './Login.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
-import googleAuth from 'model/googleAuth'
+import cloudConvert from 'model/cloudConvert'
+
+const init = async () => {
+  const result = await cloudConvert.convertSvg(
+    document.getElementById('svgContainer').innerHTML
+  )
+  let base64String = window.btoa(
+    String.fromCharCode(...new Uint8Array(result))
+  )
+  console.log(base64String)
+}
 
 class LoginPage extends HTMLElement {
   connectedCallback () {
@@ -15,8 +25,7 @@ class LoginPage extends HTMLElement {
   }
 
   onLoginClick () {
-    googleAuth
-      .signIn()
+    init()
   }
 }
 
