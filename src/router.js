@@ -29,6 +29,11 @@ export default () => {
       main.innerHTML =
         '<kf-pages-create-discovery></kf-pages-create-discovery>'
     })
+    .on('tools', async () => {
+      await import('./pages/tools/Tools')
+      await window.customElements.whenDefined('kf-pages-tools')
+      main.innerHTML = '<kf-pages-tools></kf-pages-tools>'
+    })
     .on('discovery/:id', async ({ id }) => {
       await import('./pages/discoveryDetail/DiscoveryDetail')
       await window.customElements.whenDefined('kf-pages-discovery-detail')
