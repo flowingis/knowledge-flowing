@@ -26,16 +26,14 @@ class DiscoveryDetailPage extends HTMLElement {
 
   async load () {
     const discoveryData = await discoveries.get(this.discoveryId)
-    this.discovery = discoveryFactory(discoveryData)
+    this.discoveryModel = discoveryFactory(discoveryData)
 
-    this.updateDomUnsubscribe = this.discovery.addChangeListener(data => {
-      updateText(this, {
-        ...this,
-        printableDiscovery: getPrintableDiscovery(data)
-      })
+    this.updateDomUnsubscribe = this.discoveryModel.addChangeListener(data => {
+      this.discovery = data
+      updateText(this)
     })
 
-    this.saveUnsubscribe = this.discovery.addChangeListener(async data => {
+    this.saveUnsubscribe = this.discoveryModel.addChangeListener(async data => {
       await discoveries.save(data)
       swal('Discovery Saved')
     }, false)
