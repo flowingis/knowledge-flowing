@@ -3,7 +3,7 @@ import { htmlToElement, bindEvents } from 'utils/dom'
 import discoveries from 'api/discoveries'
 import appContext from 'appContext'
 
-class ArchivePage extends HTMLElement {
+export default class ArchivePage extends HTMLElement {
   connectedCallback () {
     this.render()
     this.tableBody = this.querySelector('tbody')
@@ -52,5 +52,3 @@ class ArchivePage extends HTMLElement {
     this.style.display = 'block'
   }
 }
-
-window.customElements.define('kf-pages-archive', ArchivePage)

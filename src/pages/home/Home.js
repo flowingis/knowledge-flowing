@@ -2,7 +2,7 @@ import template from './Home.html'
 import appContext from 'appContext'
 import { htmlToElement } from 'utils/dom'
 
-class HomePage extends HTMLElement {
+export default class HomePage extends HTMLElement {
   connectedCallback () {
     this.render()
   }
@@ -14,5 +14,3 @@ class HomePage extends HTMLElement {
     appContext.getRouter().updatePageLinks()
   }
 }
-
-window.customElements.define('kf-pages-home', HomePage)

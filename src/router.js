@@ -1,4 +1,5 @@
 import Navigo from 'navigo'
+import './pages'
 
 let router
 
@@ -8,35 +9,23 @@ export default () => {
   router = new Navigo(null, true)
 
   router
-    .on(async () => {
-      await import('./pages/login/Login')
-      await window.customElements.whenDefined('kf-pages-login')
+    .on(() => {
       main.innerHTML = '<kf-pages-login></kf-pages-login>'
     })
-    .on('home', async () => {
-      await import('./pages/home/Home')
-      await window.customElements.whenDefined('kf-pages-home')
+    .on('home', () => {
       main.innerHTML = '<kf-pages-home></kf-pages-home>'
     })
-    .on('discovery', async () => {
-      await import('./pages/archive/Archive')
-      await window.customElements.whenDefined('kf-pages-archive')
+    .on('discovery', () => {
       main.innerHTML = '<kf-pages-archive></kf-pages-archive>'
     })
-    .on('discovery/create', async () => {
-      await import('./pages/createDiscovery/CreateDiscovery')
-      await window.customElements.whenDefined('kf-pages-create-discovery')
+    .on('discovery/create', () => {
       main.innerHTML =
         '<kf-pages-create-discovery></kf-pages-create-discovery>'
     })
-    .on('tools', async () => {
-      await import('./pages/tools/Tools')
-      await window.customElements.whenDefined('kf-pages-tools')
+    .on('tools', () => {
       main.innerHTML = '<kf-pages-tools></kf-pages-tools>'
     })
-    .on('discovery/:id', async ({ id }) => {
-      await import('./pages/discoveryDetail/DiscoveryDetail')
-      await window.customElements.whenDefined('kf-pages-discovery-detail')
+    .on('discovery/:id', ({ id }) => {
       main.innerHTML = `<kf-pages-discovery-detail discovery-id="${id}"></kf-pages-discovery-detail>`
     })
     .resolve()

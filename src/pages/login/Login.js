@@ -2,7 +2,7 @@ import template from './Login.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
 import googleAuth from 'api/googleAuth'
 
-class LoginPage extends HTMLElement {
+export default class LoginPage extends HTMLElement {
   connectedCallback () {
     this.render()
   }
@@ -18,5 +18,3 @@ class LoginPage extends HTMLElement {
     googleAuth.signIn()
   }
 }
-
-window.customElements.define('kf-pages-login', LoginPage)

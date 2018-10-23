@@ -6,7 +6,7 @@ import pipeDriveClient, {
 } from 'api/pipeDriveClient'
 import appContext from 'appContext'
 
-class CreateDiscoveryPage extends HTMLElement {
+export default class CreateDiscoveryPage extends HTMLElement {
   connectedCallback () {
     this.render()
     this.inputValue = ''
@@ -55,5 +55,3 @@ class CreateDiscoveryPage extends HTMLElement {
     }
   }
 }
-
-window.customElements.define('kf-pages-create-discovery', CreateDiscoveryPage)

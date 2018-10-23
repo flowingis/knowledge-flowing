@@ -6,7 +6,7 @@ import discoveryFactory from 'model/discovery'
 const getPrintableDiscovery = discovery =>
   `${discovery.id} - ${discovery.title}`
 
-class DiscoveryDetailPage extends HTMLElement {
+export default class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
     this.render()
   }
@@ -85,5 +85,3 @@ class DiscoveryDetailPage extends HTMLElement {
     this.saveUnsubscribe || this.saveUnsubscribe()
   }
 }
-
-window.customElements.define('kf-pages-discovery-detail', DiscoveryDetailPage)

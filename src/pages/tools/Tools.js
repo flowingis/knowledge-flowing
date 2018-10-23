@@ -1,7 +1,7 @@
 import template from './Tools.html'
 import { htmlToElement } from 'utils/dom'
 
-class ToolsPage extends HTMLElement {
+export default class ToolsPage extends HTMLElement {
   connectedCallback () {
     this.render()
   }
@@ -11,5 +11,3 @@ class ToolsPage extends HTMLElement {
     this.appendChild(element)
   }
 }
-
-window.customElements.define('kf-pages-tools', ToolsPage)
