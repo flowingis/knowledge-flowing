@@ -1,6 +1,6 @@
 import template from './Menu.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
-import googleAuth from 'model/googleAuth'
+import googleAuth from 'api/googleAuth'
 import appContext from 'appContext'
 
 class Menu extends HTMLElement {

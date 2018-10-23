@@ -1,6 +1,6 @@
 import template from './Login.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
-import googleAuth from 'model/googleAuth'
+import googleAuth from 'api/googleAuth'
 
 class LoginPage extends HTMLElement {
   connectedCallback () {
@@ -15,8 +15,7 @@ class LoginPage extends HTMLElement {
   }
 
   onLoginClick () {
-    googleAuth
-      .signIn()
+    googleAuth.signIn()
   }
 }
 

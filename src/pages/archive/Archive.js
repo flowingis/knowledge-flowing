@@ -1,6 +1,6 @@
 import template from './Archive.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
-import discoveries from 'model/discoveries'
+import discoveries from 'api/discoveries'
 import appContext from 'appContext'
 
 class ArchivePage extends HTMLElement {

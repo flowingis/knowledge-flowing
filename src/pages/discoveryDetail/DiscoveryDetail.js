@@ -1,7 +1,7 @@
 import template from './DiscoveryDetail.html'
 import { htmlToElement, bindEvents, updateText } from 'utils/dom'
-import discoveries from 'model/discoveries'
-import googleDrive from 'model/googleDrive'
+import discoveries from 'api/discoveries'
+import googleDrive from 'api/googleDrive'
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -23,7 +23,6 @@ class DiscoveryDetailPage extends HTMLElement {
 
   async load () {
     this.discovery = await discoveries.get(this.discoveryId)
-    console.log(this.discovery)
     updateText(this)
   }
 

@@ -1,9 +1,9 @@
 import template from './CreateDiscovery.html'
 import { htmlToElement, bindEvents } from 'utils/dom'
-import discoveries from 'model/discoveries'
+import discoveries from 'api/discoveries'
 import pipeDriveClient, {
   extractIdFromPipeDriveUrl
-} from 'model/pipeDriveClient'
+} from 'api/pipeDriveClient'
 import appContext from 'appContext'
 
 class CreateDiscoveryPage extends HTMLElement {

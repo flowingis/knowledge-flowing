@@ -1,5 +1,5 @@
 import './components'
-import googleAuth from 'model/googleAuth'
+import googleAuth from 'api/googleAuth'
 import appContext from './appContext'
 
 const start = () => {
