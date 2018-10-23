@@ -43,12 +43,21 @@ const factory = () => {
     onInitListener = cb
   }
 
+  const getToken = () => {
+    const user = gapi.auth2.getAuthInstance().currentUser.get()
+    if (!user) {
+      return
+    }
+    return user.getAuthResponse(true).access_token
+  }
+
   return {
     onClientLoad,
     addSignInListener,
     signIn,
     signOut,
-    setInitListener
+    setInitListener,
+    getToken
   }
 }
 

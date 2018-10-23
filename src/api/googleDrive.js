@@ -1,6 +1,7 @@
 import get from 'lodash.get'
 import multipartRelatedBodyFactory from './multipartRelatedBodyFactory'
 import uuid from 'uuid'
+import googleAuth from './googleAuth'
 
 export const DIRECTORY_MIME_TYPE = 'application/vnd.google-apps.folder'
 
@@ -132,13 +133,10 @@ const factory = () => {
     mimeType = 'application/json',
     parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
   }) => {
-    const user = gapi.auth2.getAuthInstance().currentUser.get()
-    const accessToken = user.getAuthResponse(true).access_token
-
     const boundary = uuid.v4()
 
     const headers = new window.Headers({
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${googleAuth.getToken()}`,
       'Content-Type': `multipart/related; boundary=${boundary}`
     })
 
@@ -169,11 +167,9 @@ const factory = () => {
     const URL = `https://content.googleapis.com/drive/v3/files/${fileId}?alt=media&fields=webContentLink&key=${
       process.env.GOGGLE_API_KEY
     }`
-    const user = gapi.auth2.getAuthInstance().currentUser.get()
-    const accessToken = user.getAuthResponse(true).access_token
 
     const headers = new window.Headers({
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${googleAuth.getToken()}`
     })
 
     const config = {
