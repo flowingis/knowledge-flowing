@@ -1,5 +1,4 @@
 import Navigo from 'navigo'
-import './pages'
 
 let router
 

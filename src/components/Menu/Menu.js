@@ -3,7 +3,7 @@ import { htmlToElement, bindEvents } from 'utils/dom'
 import googleAuth from 'api/googleAuth'
 import appContext from 'appContext'
 
-class Menu extends HTMLElement {
+export default class Menu extends HTMLElement {
   connectedCallback () {
     const child = this.firstElementChild
 
@@ -13,12 +13,13 @@ class Menu extends HTMLElement {
     bindEvents(element, this, 'click')
     this.appendChild(element)
     this.style.display = 'block'
-    appContext.getRouter().updatePageLinks()
+    const router = appContext.getRouter()
+    if (router) {
+      router.updatePageLinks()
+    }
   }
 
   onLogoutClick () {
     googleAuth.signOut()
   }
 }
-
-window.customElements.define('kf-components-menu', Menu)

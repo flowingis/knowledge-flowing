@@ -1,6 +1,7 @@
-import './components'
 import googleAuth from 'api/googleAuth'
 import appContext from './appContext'
+import './components'
+import './pages'
 
 const start = () => {
   const router = appContext.getRouter()
