@@ -17,22 +17,42 @@ const transformResult = driveElement => {
 
 const factory = pipeDriveClient => {
   const get = async pipeDriveId => {
-    const formattedId = formatId(pipeDriveId)
-    const directory = await googleDrive.findDirectory(formattedId, false)
-    if (!directory) {
+    const file = await googleDrive.find(`${pipeDriveId}.json`, true)
+    if (!file) {
       return
     }
 
-    return transformResult(directory)
+    const { id } = file
+
+    const result = await googleDrive.download(id)
+
+    if (!result) {
+      return
+    }
+
+    return JSON.parse(result)
   }
 
   const create = async pipeDriveId => {
     const response = await pipeDriveClient.get(pipeDriveId)
-    const directoryTitle = `${formatId(pipeDriveId)} - ${_get(
-      response,
-      'data.title'
-    )}`
-    return googleDrive.createDirectory(directoryTitle)
+    const title = _get(response, 'data.title')
+
+    const directoryTitle = `${formatId(pipeDriveId)} - ${title}`
+
+    const directory = await googleDrive.createDirectory(directoryTitle)
+
+    const discovery = {
+      id: pipeDriveId,
+      directory,
+      title,
+      elements: []
+    }
+
+    return googleDrive.createFile({
+      name: `${pipeDriveId}.json`,
+      parent: directory.id,
+      data: JSON.stringify(discovery)
+    })
   }
 
   const list = async () => {
@@ -45,10 +65,12 @@ const factory = pipeDriveClient => {
       process.env.DISCOVERY_ELEMENTS_SPREADSHEET_ID,
       process.env.DISCOVERY_ELEMENTS_SPREADSHEET_RANGE
     )
+
     const values = _get(data, 'values', [])
-    return values.map(row => {
+    return values.map((row, index) => {
       const [name, length, notes] = row
       return {
+        id: index,
         name,
         length,
         notes

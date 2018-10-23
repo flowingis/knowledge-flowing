@@ -23,6 +23,7 @@ class DiscoveryDetailPage extends HTMLElement {
 
   async load () {
     this.discovery = await discoveries.get(this.discoveryId)
+    console.log(this.discovery)
     updateText(this)
   }
 

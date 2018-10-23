@@ -165,19 +165,57 @@ const factory = () => {
       .then(r => r.id)
   }
 
+  const download = async fileId => {
+    const URL = `https://content.googleapis.com/drive/v3/files/${fileId}?alt=media&fields=webContentLink&key=${
+      process.env.GOGGLE_API_KEY
+    }`
+    const user = gapi.auth2.getAuthInstance().currentUser.get()
+    const accessToken = user.getAuthResponse(true).access_token
+
+    const headers = new window.Headers({
+      Authorization: `Bearer ${accessToken}`
+    })
+
+    const config = {
+      method: 'GET',
+      headers
+    }
+
+    return window.fetch(URL, config).then(r => r.text())
+  }
+
+  const find = async (name, equal = true, parent, mimeType) => {
+    const nameOperator = equal ? '=' : 'contains'
+    let q = `trashed = false and name ${nameOperator} '${name}'`
+
+    if (parent) {
+      q = `${q} and '${parent}' in parents`
+    }
+
+    if (mimeType) {
+      q = `${q} and mimeType='${mimeType}`
+    }
+
+    return gapi.client.drive.files
+      .list({
+        q,
+        pageSize: 1,
+        fields: 'files(id, name, webViewLink)'
+      })
+      .then(r => get(r, 'result.files.0'))
+  }
+
   const findDirectory = async (
     name,
     equal = true,
     parent = process.env.BASE_GOOGLE_DRIVE_DIRECTORY
   ) => {
-    const nameOperator = equal ? '=' : 'contains'
-    return gapi.client.drive.files
-      .list({
-        q: `mimeType='${DIRECTORY_MIME_TYPE}' and trashed = false and name ${nameOperator} '${name}' and '${parent}' in parents`,
-        pageSize: 1,
-        fields: 'files(id, name, webViewLink)'
-      })
-      .then(r => get(r, 'result.files.0'))
+    return find({
+      name,
+      equal,
+      parent,
+      mimeType: DIRECTORY_MIME_TYPE
+    })
   }
 
   const list = async ({
@@ -214,9 +252,11 @@ const factory = () => {
 
   return {
     list,
+    find,
     findDirectory,
     createDirectory,
-    createFile
+    createFile,
+    download
   }
 }
 
