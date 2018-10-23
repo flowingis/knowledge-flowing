@@ -1,6 +1,10 @@
 import template from './DiscoveryDetail.html'
 import { htmlToElement, bindEvents, updateText } from 'utils/dom'
 import discoveries from 'api/discoveries'
+import discoveryFactory from 'model/discovery'
+
+const getPrintableDiscovery = discovery =>
+  `${discovery.id} - ${discovery.title}`
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -21,8 +25,20 @@ class DiscoveryDetailPage extends HTMLElement {
   }
 
   async load () {
-    this.discovery = await discoveries.get(this.discoveryId)
-    updateText(this)
+    const discoveryData = await discoveries.get(this.discoveryId)
+    this.discovery = discoveryFactory(discoveryData)
+
+    this.updateDomUnsubscribe = this.discovery.addChangeListener(data => {
+      updateText(this, {
+        ...this,
+        printableDiscovery: getPrintableDiscovery(data)
+      })
+    })
+
+    this.saveUnsubscribe = this.discovery.addChangeListener(async data => {
+      await discoveries.save(data)
+      swal('Discovery Saved')
+    }, false)
   }
 
   async renderList () {
@@ -47,9 +63,7 @@ class DiscoveryDetailPage extends HTMLElement {
       parent: this.discovery.directoryId,
       mimeType: 'application/vnd.google-apps.document'
     }) */
-    this.discovery.elements.push(this.discovery.elements.length)
-    await discoveries.save(this.discovery)
-    swal('Discovery Saved')
+    this.discovery.addElement(new Date().getTime())
   }
 
   get discoveryId () {
@@ -65,7 +79,12 @@ class DiscoveryDetailPage extends HTMLElement {
       return this.discoveryId
     }
 
-    return `${this.discovery.id} - ${this.discovery.title}`
+    return getPrintableDiscovery(this.discovery)
+  }
+
+  disconnectedCallback () {
+    this.updateDomUnsubscribe || this.updateDomUnsubscribe()
+    this.saveUnsubscribe || this.saveUnsubscribe()
   }
 }
 
