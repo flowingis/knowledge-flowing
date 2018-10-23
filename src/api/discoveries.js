@@ -48,10 +48,24 @@ const factory = pipeDriveClient => {
       elements: []
     }
 
-    return googleDrive.createFile({
+    return googleDrive.create({
       name: `${pipeDriveId}.json`,
       parent: directory.id,
       data: JSON.stringify(discovery)
+    })
+  }
+
+  const save = async directory => {
+    const { id } = directory
+
+    const file = await googleDrive.find(`${id}.json`, true)
+    if (!file) {
+      return
+    }
+
+    return googleDrive.update({
+      fileId: file.id,
+      data: directory
     })
   }
 
@@ -82,7 +96,8 @@ const factory = pipeDriveClient => {
     create,
     list,
     listElements,
-    get
+    get,
+    save
   }
 }
 

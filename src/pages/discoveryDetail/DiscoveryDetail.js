@@ -1,7 +1,6 @@
 import template from './DiscoveryDetail.html'
 import { htmlToElement, bindEvents, updateText } from 'utils/dom'
 import discoveries from 'api/discoveries'
-import googleDrive from 'api/googleDrive'
 
 class DiscoveryDetailPage extends HTMLElement {
   connectedCallback () {
@@ -41,13 +40,16 @@ class DiscoveryDetailPage extends HTMLElement {
   }
 
   async save () {
-    await googleDrive.createFile({
+    /*
+    await googleDrive.create({
       name: this.printableDiscovery,
       data: `<html></body>${this.innerHTML}</body></html>`,
       parent: this.discovery.directoryId,
       mimeType: 'application/vnd.google-apps.document'
-    })
-    swal('File Saved')
+    }) */
+    this.discovery.elements.push(this.discovery.elements.length)
+    await discoveries.save(this.discovery)
+    swal('Discovery Saved')
   }
 
   get discoveryId () {
